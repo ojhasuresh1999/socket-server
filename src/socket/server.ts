@@ -84,7 +84,11 @@ export function getIO(): TypedServer | null {
 // =============================================================================
 
 function handleConnection(io: TypedServer, socket: TypedSocket): void {
-  console.log(`🔌 New socket connection: ${socket.id}`);
+  const origin =
+    socket.handshake.headers.origin ||
+    socket.handshake.headers.referer ||
+    "unknown origin";
+  console.log(`🔌 New connection: ${socket.id} | Origin: ${origin}`);
 
   // Initialize socket data
   socket.data.userType = "user";

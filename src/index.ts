@@ -22,7 +22,9 @@ app.use(express.json());
 // Health Check Endpoint
 // =============================================================================
 
-app.get("/health", (_req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
+  const origin = req.get("origin") || req.get("referer") || "unknown origin";
+  console.log(`🏥 Health check requested from: ${origin}`);
   res.json({
     status: "ok",
     timestamp: new Date().toISOString(),

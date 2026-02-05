@@ -1,6 +1,6 @@
 import { Server as HttpServer } from "http";
 import { Server, Socket } from "socket.io";
-import { config } from "../config/index.js";
+import { config, isOriginAllowed } from "../config/index.js";
 import {
   handleUserJoin,
   handleAdminJoin,
@@ -54,7 +54,13 @@ export function initSocketServer(httpServer: HttpServer): TypedServer {
     SocketData
   >(httpServer, {
     cors: {
-      origin: config.cors.origins,
+      origin: (origin, callback) => {
+        if (isOriginAllowed(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
       methods: ["GET", "POST"],
       credentials: true,
     },

@@ -5,6 +5,7 @@ import {
   config,
   connectToDatabase,
   disconnectDatabase,
+  corsOptions,
 } from "./config/index.js";
 import { initSocketServer } from "./socket/index.js";
 
@@ -15,7 +16,7 @@ import { initSocketServer } from "./socket/index.js";
 const app = express();
 
 // Middleware
-app.use(cors({ origin: config.cors.origins, credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // =============================================================================

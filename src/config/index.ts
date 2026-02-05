@@ -4,3 +4,4 @@ export {
   disconnectDatabase,
   isDbConnected,
 } from "./database.js";
+export { corsOptions, isOriginAllowed } from "./cors.js";
